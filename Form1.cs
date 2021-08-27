@@ -1,11 +1,7 @@
 ﻿using AnsysPlotRecognition.Models;
-using ImageRecognition;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace AnsysPlotRecognition
@@ -23,7 +19,6 @@ namespace AnsysPlotRecognition
         bool pictureLoaded = false;
         bool selecting, mouseDown = false;
 
-        
         float zoom = 1f;
 
         public MainForm()
@@ -32,7 +27,10 @@ namespace AnsysPlotRecognition
             toolStripStatusX.Text = "0";
             toolStripStatusY.Text = "0";
             toolStripLogLabel.Text = "...";
+
+            //Отладочное окно для отслеживания изменения коллекции
             plotResults.ListChanged += PlotResults_ListChanged;
+
             //Data bindings
             filesListBox.DataSource = plotResults;
             originalPicBox.DataBindings.Add(new Binding("Image", plotResults, "OriginalImg", true, DataSourceUpdateMode.OnPropertyChanged));
@@ -42,11 +40,9 @@ namespace AnsysPlotRecognition
             toolStripProgressBar.ProgressBar.DataBindings.Add(new Binding("Maximum", plotResults.Count, ""));
         }
 
-        
-
         private void PlotResults_ListChanged(object sender, ListChangedEventArgs e)
         {
-            MessageBox.Show("");
+            MessageBox.Show("Произошло изменение коллекции!");
         }
 
         private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -105,7 +101,7 @@ namespace AnsysPlotRecognition
                 }
                 else
                 {
-                    Recognizer recognizer = new Recognizer(@"C:\Users\OLEJA\source\repos\ImageRecognition\lang");
+                    Recognizer recognizer = new Recognizer(@".\lang\");
                     if (region != Rectangle.Empty)
                     {
                         (string recognizedText, bool succed) = recognizer.RecognizeIt((Bitmap)fragmentPicBox.Image.Clone());
@@ -253,7 +249,7 @@ namespace AnsysPlotRecognition
         {
             if (checkBoxForAll.Checked)
             {
-
+                //TODO Заполнить 
             }
         }
 
@@ -265,6 +261,5 @@ namespace AnsysPlotRecognition
             }
         }
 
-        
     }
 }

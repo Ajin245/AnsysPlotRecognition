@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnsysPlotRecognition", "AnsysPlotRecognition.csproj", "{34E65A71-38AA-4733-B2A9-C7DD28BC48DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageRecognition", "..\ImageRecognition\ImageRecognition.csproj", "{13C15C5E-43A7-4AD9-8C9D-2F66298AFE4A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{34E65A71-38AA-4733-B2A9-C7DD28BC48DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34E65A71-38AA-4733-B2A9-C7DD28BC48DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34E65A71-38AA-4733-B2A9-C7DD28BC48DC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{13C15C5E-43A7-4AD9-8C9D-2F66298AFE4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{13C15C5E-43A7-4AD9-8C9D-2F66298AFE4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{13C15C5E-43A7-4AD9-8C9D-2F66298AFE4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{13C15C5E-43A7-4AD9-8C9D-2F66298AFE4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
