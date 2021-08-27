@@ -44,8 +44,9 @@ namespace AnsysPlotRecognition
             this.fragmentPicBox = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.recognRichTBox = new System.Windows.Forms.RichTextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.filesTreeView = new System.Windows.Forms.TreeView();
+            this.checkBoxForAll = new System.Windows.Forms.CheckBox();
+            this.originalPicBox = new System.Windows.Forms.PictureBox();
+            this.filesListBox = new System.Windows.Forms.ListBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelX = new System.Windows.Forms.ToolStripStatusLabel();
@@ -55,7 +56,6 @@ namespace AnsysPlotRecognition
             this.toolStripStatusSpace = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripLogLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
-            this.checkBoxForAll = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -63,7 +63,7 @@ namespace AnsysPlotRecognition
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fragmentPicBox)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.originalPicBox)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -146,15 +146,15 @@ namespace AnsysPlotRecognition
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.56202F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.13173F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.filesTreeView, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.originalPicBox, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.filesListBox, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 50);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 499F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1168, 499);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1168, 500);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // tableLayoutPanel2
@@ -171,7 +171,7 @@ namespace AnsysPlotRecognition
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(394, 493);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(394, 494);
             this.tableLayoutPanel2.TabIndex = 5;
             // 
             // groupBox1
@@ -181,7 +181,7 @@ namespace AnsysPlotRecognition
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(388, 240);
+            this.groupBox1.Size = new System.Drawing.Size(388, 241);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Фрагмент для анализа:";
@@ -193,7 +193,7 @@ namespace AnsysPlotRecognition
             this.fragmentPicBox.Location = new System.Drawing.Point(3, 20);
             this.fragmentPicBox.Margin = new System.Windows.Forms.Padding(0);
             this.fragmentPicBox.Name = "fragmentPicBox";
-            this.fragmentPicBox.Size = new System.Drawing.Size(382, 217);
+            this.fragmentPicBox.Size = new System.Drawing.Size(382, 218);
             this.fragmentPicBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.fragmentPicBox.TabIndex = 5;
             this.fragmentPicBox.TabStop = false;
@@ -202,7 +202,7 @@ namespace AnsysPlotRecognition
             // 
             this.groupBox2.Controls.Add(this.recognRichTBox);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(3, 249);
+            this.groupBox2.Location = new System.Drawing.Point(3, 250);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(198, 241);
             this.groupBox2.TabIndex = 9;
@@ -218,31 +218,43 @@ namespace AnsysPlotRecognition
             this.recognRichTBox.TabIndex = 4;
             this.recognRichTBox.Text = "";
             // 
-            // pictureBox1
+            // checkBoxForAll
             // 
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(216, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(549, 493);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
-            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
-            this.pictureBox1.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
-            this.pictureBox1.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
-            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
-            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
+            this.checkBoxForAll.AutoSize = true;
+            this.checkBoxForAll.Location = new System.Drawing.Point(207, 250);
+            this.checkBoxForAll.Name = "checkBoxForAll";
+            this.checkBoxForAll.Size = new System.Drawing.Size(162, 22);
+            this.checkBoxForAll.TabIndex = 10;
+            this.checkBoxForAll.Text = "Выделить для всех";
+            this.checkBoxForAll.UseVisualStyleBackColor = true;
+            this.checkBoxForAll.CheckedChanged += new System.EventHandler(this.checkBoxForAll_CheckedChanged);
             // 
-            // filesTreeView
+            // originalPicBox
             // 
-            this.filesTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.filesTreeView.Location = new System.Drawing.Point(3, 3);
-            this.filesTreeView.Name = "filesTreeView";
-            this.filesTreeView.Size = new System.Drawing.Size(207, 493);
-            this.filesTreeView.TabIndex = 6;
-            this.filesTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.filesTreeView_AfterSelect);
+            this.originalPicBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.originalPicBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.originalPicBox.Location = new System.Drawing.Point(216, 3);
+            this.originalPicBox.Name = "originalPicBox";
+            this.originalPicBox.Size = new System.Drawing.Size(549, 494);
+            this.originalPicBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.originalPicBox.TabIndex = 0;
+            this.originalPicBox.TabStop = false;
+            this.originalPicBox.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
+            this.originalPicBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+            this.originalPicBox.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
+            this.originalPicBox.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
+            this.originalPicBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+            this.originalPicBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
+            // 
+            // filesListBox
+            // 
+            this.filesListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.filesListBox.FormattingEnabled = true;
+            this.filesListBox.ItemHeight = 18;
+            this.filesListBox.Location = new System.Drawing.Point(3, 3);
+            this.filesListBox.Name = "filesListBox";
+            this.filesListBox.Size = new System.Drawing.Size(207, 494);
+            this.filesListBox.TabIndex = 6;
             // 
             // openFileDialog
             // 
@@ -259,7 +271,7 @@ namespace AnsysPlotRecognition
             this.toolStripStatusSpace,
             this.toolStripLogLabel,
             this.toolStripProgressBar});
-            this.statusStrip.Location = new System.Drawing.Point(0, 549);
+            this.statusStrip.Location = new System.Drawing.Point(0, 550);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(1168, 22);
             this.statusStrip.TabIndex = 5;
@@ -307,22 +319,11 @@ namespace AnsysPlotRecognition
             this.toolStripProgressBar.Name = "toolStripProgressBar";
             this.toolStripProgressBar.Size = new System.Drawing.Size(200, 16);
             // 
-            // checkBoxForAll
-            // 
-            this.checkBoxForAll.AutoSize = true;
-            this.checkBoxForAll.Location = new System.Drawing.Point(207, 249);
-            this.checkBoxForAll.Name = "checkBoxForAll";
-            this.checkBoxForAll.Size = new System.Drawing.Size(162, 22);
-            this.checkBoxForAll.TabIndex = 10;
-            this.checkBoxForAll.Text = "Выделить для всех";
-            this.checkBoxForAll.UseVisualStyleBackColor = true;
-            this.checkBoxForAll.CheckedChanged += new System.EventHandler(this.checkBoxForAll_CheckedChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1168, 571);
+            this.ClientSize = new System.Drawing.Size(1168, 572);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.menuStrip);
@@ -343,7 +344,7 @@ namespace AnsysPlotRecognition
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.fragmentPicBox)).EndInit();
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.originalPicBox)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -359,7 +360,7 @@ namespace AnsysPlotRecognition
         private System.Windows.Forms.ToolStrip toolStrip;
         private System.Windows.Forms.ToolStripButton recognizeBtn;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox originalPicBox;
         private System.Windows.Forms.RichTextBox recognRichTBox;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -367,7 +368,6 @@ namespace AnsysPlotRecognition
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.PictureBox fragmentPicBox;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.TreeView filesTreeView;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusSpace;
@@ -379,6 +379,7 @@ namespace AnsysPlotRecognition
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusY;
         private System.Windows.Forms.ToolStripStatusLabel toolStripLogLabel;
         private System.Windows.Forms.CheckBox checkBoxForAll;
+        private System.Windows.Forms.ListBox filesListBox;
     }
 }
 

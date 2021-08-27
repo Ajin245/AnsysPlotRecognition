@@ -1,39 +1,120 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 
 namespace AnsysPlotRecognition.Models
 {
-    public class PlotResult
+    public class PlotResult : INotifyPropertyChanged
     {
         private static int id = 1;
-        public int Id { get; }
-        public string FilePath { get; set; }
-        public string FIleName { get; set; }
-        public Image OriginalImg { get; set; }
-        public Image CropImg { get; set; }
-        public string RecognizedText { get; set; }
+        private string _filePath;
+        private string _fileName;
+        private Image _originalImg;
+        private Image _cropImg;
+        private string _recognizedText;
 
-        public PlotResult() {}
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public int Id { get; }
+        public string FilePath { 
+            get
+            {
+                return _filePath;
+            }
+            set 
+            {
+                if (value != _filePath)
+                {
+                    _filePath = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+        public string FileName { 
+            get
+            {
+                return _fileName;
+            }
+            set
+            {
+                if (value != _fileName)
+                {
+                    _fileName = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+        public Image OriginalImg {
+            get 
+            {
+                return _originalImg;
+            }
+            set 
+            {
+                if (value != _originalImg)
+                {
+                    _originalImg = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+        public Image CropImg {
+            get 
+            {
+                return _cropImg;
+            }
+            set
+            {
+                if (value != _cropImg)
+                {
+                    _cropImg = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+        public string RecognizedText { 
+            get 
+            {
+                return _recognizedText;
+            }
+            set 
+            {
+                if (value != _recognizedText)
+                {
+                    _recognizedText = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private void NotifyPropertyChanged(string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        public PlotResult() { }
         public PlotResult(string filePath)
         {
             try
             {
                 Id = PlotResult.id++;
                 FilePath = filePath;
-                FIleName = Path.GetFileName(filePath);
+                FileName = Path.GetFileName(filePath);
                 OriginalImg = Image.FromFile(filePath);
-                CropImg = null;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-    }
 
-    public class ROI
-    {
-
+        public override string ToString()
+        {
+            return FileName;
+        }
     }
 }

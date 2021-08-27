@@ -2,6 +2,7 @@
 using ImageRecognition;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -11,10 +12,8 @@ namespace AnsysPlotRecognition
 {
     public partial class MainForm : Form
     {
-        PlotResult selectedPlot = new PlotResult();
-
-        List<PlotResult> plotResults = new List<PlotResult>();
-
+        BindingList<PlotResult> plotResults = new BindingList<PlotResult>();
+        
         RectangleF region = RectangleF.Empty;
         RectangleF imgArea = RectangleF.Empty;
         Rectangle crop = Rectangle.Empty;
@@ -27,20 +26,32 @@ namespace AnsysPlotRecognition
         
         float zoom = 1f;
 
-        //Для расчета progressbar 
-        int filesCount = 0;
-
         public MainForm()
         {
             InitializeComponent();
             toolStripStatusX.Text = "0";
             toolStripStatusY.Text = "0";
             toolStripLogLabel.Text = "...";
-            
+            plotResults.ListChanged += PlotResults_ListChanged;
+            //Data bindings
+            filesListBox.DataSource = plotResults;
+            originalPicBox.DataBindings.Add(new Binding("Image", plotResults, "OriginalImg", true, DataSourceUpdateMode.OnPropertyChanged));
+            fragmentPicBox.DataBindings.Add(new Binding("Image", plotResults, "CropImg", true, DataSourceUpdateMode.OnPropertyChanged));
+            recognRichTBox.DataBindings.Add(new Binding("Text", plotResults, "RecognizedText", true, DataSourceUpdateMode.OnPropertyChanged));
+
+            toolStripProgressBar.ProgressBar.DataBindings.Add(new Binding("Maximum", plotResults.Count, ""));
+        }
+
+        
+
+        private void PlotResults_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            MessageBox.Show("");
         }
 
         private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            plotResults.Clear();
             DialogResult result = openFileDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -49,41 +60,9 @@ namespace AnsysPlotRecognition
                     PlotResult plot = new PlotResult(file);
                     plotResults.Add(plot);
                 }
-                toolStripLogLabel.Text = $"Загружено файлов: {filesCount}";
+                toolStripLogLabel.Text = $"Загружено файлов: {plotResults.Count}";
 
-                filesCount = plotResults.Count;
-                
                 pictureLoaded = true;
-
-                toolStripProgressBar.Maximum = filesCount;
-
-                //Заполняем дерево именами файлов
-                FillFilesTree(filesTreeView.Nodes);
-                
-                //При первой загрузке открываем первую картинку
-                InitPlot(0);
-            }
-        }
-
-        private void InitPlot(int id)
-        {
-            if (plotResults.Count != 0)
-            {
-                selectedPlot = plotResults[id];
-
-                pictureBox1.Image = selectedPlot.OriginalImg;
-                fragmentPicBox.Image = selectedPlot.CropImg;
-                toolStripLogLabel.Text = $"Загружено изображение №{selectedPlot.Id}";
-            }
-        }
-        
-        private void FillFilesTree(TreeNodeCollection files)
-        {
-            foreach (PlotResult plotResult in plotResults)
-            {
-                var node = new TreeNode(plotResult.FIleName);
-                node.Nodes.Add(new TreeNode(plotResult.FilePath));
-                files.Add(node);
             }
         }
 
@@ -120,7 +99,7 @@ namespace AnsysPlotRecognition
         {
             try
             {
-                if (selectedPlot.CropImg == null)
+                if (fragmentPicBox.Image == null)
                 {
                     throw new Exception("Не выбран фрагмент файла");
                 }
@@ -129,7 +108,7 @@ namespace AnsysPlotRecognition
                     Recognizer recognizer = new Recognizer(@"C:\Users\OLEJA\source\repos\ImageRecognition\lang");
                     if (region != Rectangle.Empty)
                     {
-                        (string recognizedText, bool succed) = recognizer.RecognizeIt((Bitmap)selectedPlot.CropImg);
+                        (string recognizedText, bool succed) = recognizer.RecognizeIt((Bitmap)fragmentPicBox.Image.Clone());
 
                         if (succed)
                         {
@@ -181,27 +160,22 @@ namespace AnsysPlotRecognition
         {
             if (pictureLoaded && selecting)
             {
+                Image cropImg = null;
                 selecting = false;
                 mouseDown = false;
                 
-                //Bitmap h = (Bitmap)pictureBox1.Image;
-                Bitmap h = (Bitmap)selectedPlot.OriginalImg;
+                Bitmap originalPic = (Bitmap)originalPicBox.Image;
                 try
                 {
-                    Image cropImg = h.Clone(crop, System.Drawing.Imaging.PixelFormat.DontCare);
-                    
-                    selectedPlot.CropImg = cropImg;
-
+                    cropImg = originalPic.Clone(crop, System.Drawing.Imaging.PixelFormat.DontCare);
                     fragmentPicBox.Image = cropImg;
-                    
-                    /// TODO: Дописать проверку
-                    /// Если прямоугольник выбора рисуется изначально за пределами картинки
                 }
                 catch (Exception ex)
                 {
                     toolStripLogLabel.Text = ex.Message;
                     MessageBox.Show(ex.Message);
                 }
+                
                 this.Cursor = Cursors.Default;
             }
         }
@@ -256,7 +230,7 @@ namespace AnsysPlotRecognition
 
                     ///При использовании Zoom в свойствах отрисовки PictureBox отображение Image происходит "поверх" оригинального
                     ///и имеет свои размеры. Для правильного выделения прямоугольником нужно иметь новую СК, перестраиваемую при изменении окна
-                    SetImageScale(pictureBox1, out imgArea, out zoom);
+                    SetImageScale(originalPicBox, out imgArea, out zoom);
                     region = new RectangleF(posX, posY, width, height);
 
                     Point RLoc = Point.Round(new PointF((region.X - imgArea.X) / zoom,
@@ -275,11 +249,6 @@ namespace AnsysPlotRecognition
             }
         }
 
-        private void filesTreeView_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            InitPlot(e.Node.Index);
-        }
-
         private void checkBoxForAll_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBoxForAll.Checked)
@@ -287,8 +256,6 @@ namespace AnsysPlotRecognition
 
             }
         }
-
-        
 
         private void selectRegionBtn_Click(object sender, EventArgs e)
         {
