@@ -37,12 +37,20 @@ namespace AnsysPlotRecognition
                 return (ex.Message, false);
             }
         }
-        
-        public (string, bool) RecognizeIt(string filePath)
+        /// <summary>
+        /// Распознает текст на картинке
+        /// </summary>
+        /// <param name="img">Картинка, на которой расположен текст для распознавания</param>
+        /// <param name="rect">Область, в которой необходимо производить распознавание</param>
+        /// <returns>Кортеж, состоящий из распознанного текста и булевого значения об успешности операции</returns>
+        public (string, bool) RecognizeIt(Bitmap img, Rectangle rect)
         {
             try
             {
-                Tesseract.SetImage(new Image<Bgr, byte>(filePath));
+                Image<Bgr, byte> pic = new Image<Bgr, byte>(img);
+                pic.ROI = rect;
+                Tesseract.SetImage(pic);
+                
                 Tesseract.Recognize();
                 return (Tesseract.GetUTF8Text(), true);
             }
@@ -51,7 +59,5 @@ namespace AnsysPlotRecognition
                 return (ex.Message, false);
             }
         }
-
-
     }
 }

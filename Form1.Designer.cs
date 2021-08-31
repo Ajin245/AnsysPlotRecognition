@@ -34,16 +34,18 @@ namespace AnsysPlotRecognition
             this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenFileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.selectRegion = new System.Windows.Forms.ToolStripButton();
+            this.selectRegionBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.recognizeBtn = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.fragmentPicBox = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.recognRichTBox = new System.Windows.Forms.RichTextBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.recognizeBtn = new System.Windows.Forms.Button();
+            this.renameBtn = new System.Windows.Forms.Button();
+            this.exportToExcelBtn = new System.Windows.Forms.Button();
             this.checkBoxForAll = new System.Windows.Forms.CheckBox();
             this.originalPicBox = new System.Windows.Forms.PictureBox();
             this.filesListBox = new System.Windows.Forms.ListBox();
@@ -63,6 +65,7 @@ namespace AnsysPlotRecognition
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fragmentPicBox)).BeginInit();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.originalPicBox)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -97,10 +100,8 @@ namespace AnsysPlotRecognition
             // 
             this.toolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.selectRegion,
-            this.toolStripSeparator3,
-            this.recognizeBtn,
-            this.toolStripSeparator1});
+            this.selectRegionBtn,
+            this.toolStripSeparator3});
             this.toolStrip.Location = new System.Drawing.Point(0, 25);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
@@ -109,35 +110,20 @@ namespace AnsysPlotRecognition
             this.toolStrip.TabIndex = 2;
             this.toolStrip.Text = "toolStrip1";
             // 
-            // selectRegion
+            // selectRegionBtn
             // 
-            this.selectRegion.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.selectRegion.Image = ((System.Drawing.Image)(resources.GetObject("selectRegion.Image")));
-            this.selectRegion.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.selectRegion.Name = "selectRegion";
-            this.selectRegion.Size = new System.Drawing.Size(111, 22);
-            this.selectRegion.Text = "Выделить область";
-            this.selectRegion.Click += new System.EventHandler(this.selectRegionBtn_Click);
+            this.selectRegionBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.selectRegionBtn.Image = ((System.Drawing.Image)(resources.GetObject("selectRegionBtn.Image")));
+            this.selectRegionBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.selectRegionBtn.Name = "selectRegionBtn";
+            this.selectRegionBtn.Size = new System.Drawing.Size(111, 22);
+            this.selectRegionBtn.Text = "Выделить область";
+            this.selectRegionBtn.Click += new System.EventHandler(this.selectRegionBtn_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-            // 
-            // recognizeBtn
-            // 
-            this.recognizeBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.recognizeBtn.Image = ((System.Drawing.Image)(resources.GetObject("recognizeBtn.Image")));
-            this.recognizeBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.recognizeBtn.Name = "recognizeBtn";
-            this.recognizeBtn.Size = new System.Drawing.Size(73, 22);
-            this.recognizeBtn.Text = "Распознать";
-            this.recognizeBtn.Click += new System.EventHandler(this.recognizeBtn_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // tableLayoutPanel1
             // 
@@ -153,18 +139,18 @@ namespace AnsysPlotRecognition
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 499F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 500F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1168, 500);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.99307F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.00693F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Controls.Add(this.groupBox1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.groupBox2, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.checkBoxForAll, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.groupBox3, 1, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(771, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -191,11 +177,10 @@ namespace AnsysPlotRecognition
             this.fragmentPicBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.fragmentPicBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fragmentPicBox.Location = new System.Drawing.Point(3, 20);
-            this.fragmentPicBox.Margin = new System.Windows.Forms.Padding(0);
             this.fragmentPicBox.Name = "fragmentPicBox";
             this.fragmentPicBox.Size = new System.Drawing.Size(382, 218);
             this.fragmentPicBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.fragmentPicBox.TabIndex = 5;
+            this.fragmentPicBox.TabIndex = 0;
             this.fragmentPicBox.TabStop = false;
             // 
             // groupBox2
@@ -204,7 +189,7 @@ namespace AnsysPlotRecognition
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(3, 250);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(198, 241);
+            this.groupBox2.Size = new System.Drawing.Size(191, 241);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Распознанный текст";
@@ -212,22 +197,68 @@ namespace AnsysPlotRecognition
             // recognRichTBox
             // 
             this.recognRichTBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.recognRichTBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.recognRichTBox.Location = new System.Drawing.Point(3, 20);
             this.recognRichTBox.Name = "recognRichTBox";
-            this.recognRichTBox.Size = new System.Drawing.Size(192, 218);
+            this.recognRichTBox.Size = new System.Drawing.Size(185, 218);
             this.recognRichTBox.TabIndex = 4;
             this.recognRichTBox.Text = "";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.recognizeBtn);
+            this.groupBox3.Controls.Add(this.renameBtn);
+            this.groupBox3.Controls.Add(this.exportToExcelBtn);
+            this.groupBox3.Controls.Add(this.checkBoxForAll);
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox3.Location = new System.Drawing.Point(200, 250);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(191, 241);
+            this.groupBox3.TabIndex = 10;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Отчет";
+            // 
+            // recognizeBtn
+            // 
+            this.recognizeBtn.Location = new System.Drawing.Point(22, 48);
+            this.recognizeBtn.Name = "recognizeBtn";
+            this.recognizeBtn.Size = new System.Drawing.Size(150, 40);
+            this.recognizeBtn.TabIndex = 13;
+            this.recognizeBtn.Text = "Распознать";
+            this.recognizeBtn.UseVisualStyleBackColor = true;
+            this.recognizeBtn.Click += new System.EventHandler(this.recognizeBtn_Click);
+            // 
+            // renameBtn
+            // 
+            this.renameBtn.Location = new System.Drawing.Point(22, 94);
+            this.renameBtn.Name = "renameBtn";
+            this.renameBtn.Size = new System.Drawing.Size(150, 40);
+            this.renameBtn.TabIndex = 12;
+            this.renameBtn.Text = "Переименовать";
+            this.renameBtn.UseVisualStyleBackColor = true;
+            // 
+            // exportToExcelBtn
+            // 
+            this.exportToExcelBtn.Enabled = false;
+            this.exportToExcelBtn.Location = new System.Drawing.Point(22, 168);
+            this.exportToExcelBtn.Name = "exportToExcelBtn";
+            this.exportToExcelBtn.Size = new System.Drawing.Size(150, 40);
+            this.exportToExcelBtn.TabIndex = 11;
+            this.exportToExcelBtn.Text = "Выгрузить в Excel";
+            this.exportToExcelBtn.UseVisualStyleBackColor = true;
+            this.exportToExcelBtn.Click += new System.EventHandler(this.exportToExcelBtn_Click);
             // 
             // checkBoxForAll
             // 
             this.checkBoxForAll.AutoSize = true;
-            this.checkBoxForAll.Location = new System.Drawing.Point(207, 250);
+            this.checkBoxForAll.Dock = System.Windows.Forms.DockStyle.Top;
+            this.checkBoxForAll.Enabled = false;
+            this.checkBoxForAll.Location = new System.Drawing.Point(3, 20);
             this.checkBoxForAll.Name = "checkBoxForAll";
-            this.checkBoxForAll.Size = new System.Drawing.Size(162, 22);
+            this.checkBoxForAll.Size = new System.Drawing.Size(185, 22);
             this.checkBoxForAll.TabIndex = 10;
             this.checkBoxForAll.Text = "Выделить для всех";
             this.checkBoxForAll.UseVisualStyleBackColor = true;
-            this.checkBoxForAll.CheckedChanged += new System.EventHandler(this.checkBoxForAll_CheckedChanged);
             // 
             // originalPicBox
             // 
@@ -340,10 +371,11 @@ namespace AnsysPlotRecognition
             this.toolStrip.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.fragmentPicBox)).EndInit();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.originalPicBox)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
@@ -358,15 +390,12 @@ namespace AnsysPlotRecognition
         private System.Windows.Forms.ToolStripMenuItem FileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem OpenFileToolStripMenuItem1;
         private System.Windows.Forms.ToolStrip toolStrip;
-        private System.Windows.Forms.ToolStripButton recognizeBtn;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.PictureBox originalPicBox;
         private System.Windows.Forms.RichTextBox recognRichTBox;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton selectRegion;
+        private System.Windows.Forms.ToolStripButton selectRegionBtn;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.PictureBox fragmentPicBox;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
@@ -380,6 +409,11 @@ namespace AnsysPlotRecognition
         private System.Windows.Forms.ToolStripStatusLabel toolStripLogLabel;
         private System.Windows.Forms.CheckBox checkBoxForAll;
         private System.Windows.Forms.ListBox filesListBox;
+        private System.Windows.Forms.PictureBox fragmentPicBox;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button exportToExcelBtn;
+        private System.Windows.Forms.Button recognizeBtn;
+        private System.Windows.Forms.Button renameBtn;
     }
 }
 

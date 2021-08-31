@@ -1,13 +1,16 @@
 ﻿using AnsysPlotRecognition.Models;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace AnsysPlotRecognition
 {
     public partial class MainForm : Form
     {
+        Recognizer recognizer = new Recognizer(@".\lang\");
         BindingList<PlotResult> plotResults = new BindingList<PlotResult>();
         
         RectangleF region = RectangleF.Empty;
@@ -21,6 +24,8 @@ namespace AnsysPlotRecognition
 
         float zoom = 1f;
 
+        string directoryPath = Directory.GetCurrentDirectory();
+
         public MainForm()
         {
             InitializeComponent();
@@ -28,25 +33,18 @@ namespace AnsysPlotRecognition
             toolStripStatusY.Text = "0";
             toolStripLogLabel.Text = "...";
 
-            //Отладочное окно для отслеживания изменения коллекции
-            plotResults.ListChanged += PlotResults_ListChanged;
-
             //Data bindings
             filesListBox.DataSource = plotResults;
-            originalPicBox.DataBindings.Add(new Binding("Image", plotResults, "OriginalImg", true, DataSourceUpdateMode.OnPropertyChanged));
+            originalPicBox.DataBindings.Add(new Binding("Image", plotResults, "OriginalImg",true, DataSourceUpdateMode.OnPropertyChanged));
             fragmentPicBox.DataBindings.Add(new Binding("Image", plotResults, "CropImg", true, DataSourceUpdateMode.OnPropertyChanged));
             recognRichTBox.DataBindings.Add(new Binding("Text", plotResults, "RecognizedText", true, DataSourceUpdateMode.OnPropertyChanged));
-
-            toolStripProgressBar.ProgressBar.DataBindings.Add(new Binding("Maximum", plotResults.Count, ""));
-        }
-
-        private void PlotResults_ListChanged(object sender, ListChangedEventArgs e)
-        {
-            MessageBox.Show("Произошло изменение коллекции!");
+            //exportToExcelBtn.DataBindings.Add(new Binding("Enabled", recognRichTBox, ""))
         }
 
         private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            toolStripProgressBar.Value = 0;
+
             plotResults.Clear();
             DialogResult result = openFileDialog.ShowDialog();
             if (result == DialogResult.OK)
@@ -57,9 +55,18 @@ namespace AnsysPlotRecognition
                     plotResults.Add(plot);
                 }
                 toolStripLogLabel.Text = $"Загружено файлов: {plotResults.Count}";
-
                 pictureLoaded = true;
             }
+        }
+        private void selectRegionBtn_Click(object sender, EventArgs e)
+        {
+            toolStripProgressBar.Value = 0;
+            if (pictureLoaded)
+            {
+                selecting = true;
+
+            }
+            checkBoxForAll.Enabled = false;
         }
 
         /// <summary>
@@ -88,35 +95,6 @@ namespace AnsysPlotRecognition
                 float height = si.Height * zoom;
                 float top = (sp.Height - height) / 2;
                 ImgArea = new RectangleF(0, top, sp.Width, height);
-            }
-        }
-        
-        private void recognizeBtn_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (fragmentPicBox.Image == null)
-                {
-                    throw new Exception("Не выбран фрагмент файла");
-                }
-                else
-                {
-                    Recognizer recognizer = new Recognizer(@".\lang\");
-                    if (region != Rectangle.Empty)
-                    {
-                        (string recognizedText, bool succed) = recognizer.RecognizeIt((Bitmap)fragmentPicBox.Image.Clone());
-
-                        if (succed)
-                        {
-                            toolStripProgressBar.PerformStep();
-                        }
-                        recognRichTBox.Text = recognizedText;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Обнаружена ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         
@@ -156,21 +134,22 @@ namespace AnsysPlotRecognition
         {
             if (pictureLoaded && selecting)
             {
-                Image cropImg = null;
                 selecting = false;
                 mouseDown = false;
                 
                 Bitmap originalPic = (Bitmap)originalPicBox.Image;
                 try
                 {
-                    cropImg = originalPic.Clone(crop, System.Drawing.Imaging.PixelFormat.DontCare);
-                    fragmentPicBox.Image = cropImg;
+                    fragmentPicBox.Image = originalPic.Clone(crop, System.Drawing.Imaging.PixelFormat.DontCare);
+                    PlotResult currentPlot = (PlotResult)filesListBox.SelectedItem;
+                    currentPlot.CropImg = fragmentPicBox.Image;
                 }
                 catch (Exception ex)
                 {
                     toolStripLogLabel.Text = ex.Message;
                     MessageBox.Show(ex.Message);
                 }
+                checkBoxForAll.Enabled = true;
                 
                 this.Cursor = Cursors.Default;
             }
@@ -245,21 +224,117 @@ namespace AnsysPlotRecognition
             }
         }
 
-        private void checkBoxForAll_CheckedChanged(object sender, EventArgs e)
+        private void Recognize(bool all = true)
         {
-            if (checkBoxForAll.Checked)
+            toolStripProgressBar.Maximum = plotResults.Count;
+            if (all)
             {
-                //TODO Заполнить 
+                foreach (var plot in plotResults)
+                {
+                    (string recognizedText, bool succed) = recognizer.RecognizeIt((Bitmap)plot.OriginalImg, crop);
+
+                    if (succed)
+                    {
+                        toolStripProgressBar.PerformStep();
+                    }
+                    Bitmap img = (Bitmap)plot.OriginalImg;
+                    plot.CropImg = img.Clone(crop, System.Drawing.Imaging.PixelFormat.DontCare);
+                    plot.RecognizedText = recognizedText;
+                }
+            }
+            else
+            {
+                (string recognizedText, bool succed) = recognizer.RecognizeIt((Bitmap)fragmentPicBox.Image);
+
+                if (succed)
+                {
+                    toolStripProgressBar.PerformStep();
+                }
+                recognRichTBox.Text = recognizedText;
+            }
+            checkBoxForAll.Enabled = false;
+            exportToExcelBtn.Enabled = true;
+        }
+        private void Export(bool all = true)
+        {
+            toolStripProgressBar.Maximum = plotResults.Count;
+
+            //TODO Проработать логику установки пути
+            ElementTableParser parser = new ElementTableParser($"{directoryPath}");
+            List<SolutionInformation> solutions = new List<SolutionInformation>();
+            if (all)
+            {
+                foreach (var result in plotResults)
+                {
+                    solutions.Add(parser.ParseSolutionInformation(result.RecognizedText));
+                }
+            }
+            else
+            {
+                solutions.Add(parser.ParseSolutionInformation(recognRichTBox.Text));
+            }
+            parser.WriteReport(solutions);
+        }
+        private void exportToExcelBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (recognRichTBox.Text == null)
+                {
+                    throw new Exception("Нет данных для экспорта");
+                }
+                else
+                {
+                    toolStripProgressBar.Value = 0;
+                    if (checkBoxForAll.Checked)
+                    {
+                        Export(all: true);
+                    }
+                    else
+                    {
+                        Export(all: false);
+                    }
+                    MessageBox.Show("Экспорт данных завершен", "Результаты выгружены успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Обнаружена ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void selectRegionBtn_Click(object sender, EventArgs e)
+        private void recognizeBtn_Click(object sender, EventArgs e)
         {
-            if (pictureLoaded)
+            try
             {
-                selecting = true;
+                if (fragmentPicBox.Image == null)
+                {
+                    throw new Exception("Не выбран фрагмент файла");
+                }
+                else
+                {
+                    toolStripProgressBar.Value = 0;
+
+                    if (region != Rectangle.Empty)
+                    {
+                        if (checkBoxForAll.Checked)
+                        {
+                            Recognize(all: true);
+                        }
+                        else
+                        {
+                            Recognize(all: false);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Обнаружена ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        
 
     }
 }
