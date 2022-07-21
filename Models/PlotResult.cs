@@ -108,7 +108,7 @@ namespace AnsysPlotRecognition.Models
             }
             catch (Exception ex)
             {
-                throw ex;
+                Program.Logger.Error(ex);
             }
         }
 

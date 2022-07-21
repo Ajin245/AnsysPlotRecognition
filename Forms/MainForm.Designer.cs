@@ -30,12 +30,12 @@ namespace AnsysPlotRecognition
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.OpenFileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.selectRegionBtn = new System.Windows.Forms.ToolStripButton();
+            this.openFilesBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.selectRegionBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -58,7 +58,6 @@ namespace AnsysPlotRecognition
             this.toolStripStatusSpace = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripLogLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
-            this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -70,39 +69,17 @@ namespace AnsysPlotRecognition
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip
-            // 
-            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.FileToolStripMenuItem});
-            this.menuStrip.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
-            this.menuStrip.Size = new System.Drawing.Size(1168, 25);
-            this.menuStrip.TabIndex = 0;
-            this.menuStrip.Text = "menuStrip1";
-            // 
-            // FileToolStripMenuItem
-            // 
-            this.FileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.OpenFileToolStripMenuItem1});
-            this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
-            this.FileToolStripMenuItem.Size = new System.Drawing.Size(48, 19);
-            this.FileToolStripMenuItem.Text = "Файл";
-            // 
-            // OpenFileToolStripMenuItem1
-            // 
-            this.OpenFileToolStripMenuItem1.Name = "OpenFileToolStripMenuItem1";
-            this.OpenFileToolStripMenuItem1.Size = new System.Drawing.Size(121, 22);
-            this.OpenFileToolStripMenuItem1.Text = "Открыть";
-            this.OpenFileToolStripMenuItem1.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
-            // 
             // toolStrip
             // 
+            this.toolStrip.BackColor = System.Drawing.SystemColors.ControlLight;
             this.toolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openFilesBtn,
+            this.toolStripSeparator3,
             this.selectRegionBtn,
-            this.toolStripSeparator3});
-            this.toolStrip.Location = new System.Drawing.Point(0, 25);
+            this.toolStripSeparator1,
+            this.toolStripButton1});
+            this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -110,20 +87,46 @@ namespace AnsysPlotRecognition
             this.toolStrip.TabIndex = 2;
             this.toolStrip.Text = "toolStrip1";
             // 
-            // selectRegionBtn
+            // openFilesBtn
             // 
-            this.selectRegionBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.selectRegionBtn.Image = ((System.Drawing.Image)(resources.GetObject("selectRegionBtn.Image")));
-            this.selectRegionBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.selectRegionBtn.Name = "selectRegionBtn";
-            this.selectRegionBtn.Size = new System.Drawing.Size(111, 22);
-            this.selectRegionBtn.Text = "Выделить область";
-            this.selectRegionBtn.Click += new System.EventHandler(this.selectRegionBtn_Click);
+            this.openFilesBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.openFilesBtn.Image = ((System.Drawing.Image)(resources.GetObject("openFilesBtn.Image")));
+            this.openFilesBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openFilesBtn.Margin = new System.Windows.Forms.Padding(3, 1, 0, 2);
+            this.openFilesBtn.Name = "openFilesBtn";
+            this.openFilesBtn.Size = new System.Drawing.Size(23, 22);
+            this.openFilesBtn.Text = "toolStripButton1";
+            this.openFilesBtn.ToolTipText = "Открыть файл изображения или несколько файлов\r\n";
+            this.openFilesBtn.Click += new System.EventHandler(this.openFilesBtn_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // selectRegionBtn
+            // 
+            this.selectRegionBtn.Image = ((System.Drawing.Image)(resources.GetObject("selectRegionBtn.Image")));
+            this.selectRegionBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.selectRegionBtn.Name = "selectRegionBtn";
+            this.selectRegionBtn.Size = new System.Drawing.Size(127, 22);
+            this.selectRegionBtn.Text = "Выделить область";
+            this.selectRegionBtn.Click += new System.EventHandler(this.selectRegionBtn_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(31, 22);
+            this.toolStripButton1.Text = "Лог";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -135,12 +138,12 @@ namespace AnsysPlotRecognition
             this.tableLayoutPanel1.Controls.Add(this.originalPicBox, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.filesListBox, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 50);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 25);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 500F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1168, 500);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 525F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1168, 525);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // tableLayoutPanel2
@@ -157,7 +160,7 @@ namespace AnsysPlotRecognition
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(394, 494);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(394, 519);
             this.tableLayoutPanel2.TabIndex = 5;
             // 
             // groupBox1
@@ -167,7 +170,7 @@ namespace AnsysPlotRecognition
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(388, 241);
+            this.groupBox1.Size = new System.Drawing.Size(388, 253);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Фрагмент для анализа:";
@@ -178,7 +181,7 @@ namespace AnsysPlotRecognition
             this.fragmentPicBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fragmentPicBox.Location = new System.Drawing.Point(3, 20);
             this.fragmentPicBox.Name = "fragmentPicBox";
-            this.fragmentPicBox.Size = new System.Drawing.Size(382, 218);
+            this.fragmentPicBox.Size = new System.Drawing.Size(382, 230);
             this.fragmentPicBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.fragmentPicBox.TabIndex = 0;
             this.fragmentPicBox.TabStop = false;
@@ -187,9 +190,9 @@ namespace AnsysPlotRecognition
             // 
             this.groupBox2.Controls.Add(this.recognRichTBox);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(3, 250);
+            this.groupBox2.Location = new System.Drawing.Point(3, 262);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(191, 241);
+            this.groupBox2.Size = new System.Drawing.Size(191, 254);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Распознанный текст";
@@ -197,10 +200,11 @@ namespace AnsysPlotRecognition
             // recognRichTBox
             // 
             this.recognRichTBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.recognRichTBox.Enabled = false;
             this.recognRichTBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.recognRichTBox.Location = new System.Drawing.Point(3, 20);
             this.recognRichTBox.Name = "recognRichTBox";
-            this.recognRichTBox.Size = new System.Drawing.Size(185, 218);
+            this.recognRichTBox.Size = new System.Drawing.Size(185, 231);
             this.recognRichTBox.TabIndex = 4;
             this.recognRichTBox.Text = "";
             // 
@@ -211,18 +215,18 @@ namespace AnsysPlotRecognition
             this.groupBox3.Controls.Add(this.exportToExcelBtn);
             this.groupBox3.Controls.Add(this.checkBoxForAll);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(200, 250);
+            this.groupBox3.Location = new System.Drawing.Point(200, 262);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(191, 241);
+            this.groupBox3.Size = new System.Drawing.Size(191, 254);
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Отчет";
             // 
             // recognizeBtn
             // 
-            this.recognizeBtn.Location = new System.Drawing.Point(22, 48);
+            this.recognizeBtn.Location = new System.Drawing.Point(6, 48);
             this.recognizeBtn.Name = "recognizeBtn";
-            this.recognizeBtn.Size = new System.Drawing.Size(150, 40);
+            this.recognizeBtn.Size = new System.Drawing.Size(179, 40);
             this.recognizeBtn.TabIndex = 13;
             this.recognizeBtn.Text = "Распознать";
             this.recognizeBtn.UseVisualStyleBackColor = true;
@@ -230,19 +234,20 @@ namespace AnsysPlotRecognition
             // 
             // renameBtn
             // 
-            this.renameBtn.Location = new System.Drawing.Point(22, 94);
+            this.renameBtn.Location = new System.Drawing.Point(6, 94);
             this.renameBtn.Name = "renameBtn";
-            this.renameBtn.Size = new System.Drawing.Size(150, 40);
+            this.renameBtn.Size = new System.Drawing.Size(179, 40);
             this.renameBtn.TabIndex = 12;
             this.renameBtn.Text = "Переименовать";
             this.renameBtn.UseVisualStyleBackColor = true;
+            this.renameBtn.Click += new System.EventHandler(this.renameBtn_Click);
             // 
             // exportToExcelBtn
             // 
             this.exportToExcelBtn.Enabled = false;
-            this.exportToExcelBtn.Location = new System.Drawing.Point(22, 168);
+            this.exportToExcelBtn.Location = new System.Drawing.Point(6, 195);
             this.exportToExcelBtn.Name = "exportToExcelBtn";
-            this.exportToExcelBtn.Size = new System.Drawing.Size(150, 40);
+            this.exportToExcelBtn.Size = new System.Drawing.Size(179, 40);
             this.exportToExcelBtn.TabIndex = 11;
             this.exportToExcelBtn.Text = "Выгрузить в Excel";
             this.exportToExcelBtn.UseVisualStyleBackColor = true;
@@ -266,7 +271,7 @@ namespace AnsysPlotRecognition
             this.originalPicBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.originalPicBox.Location = new System.Drawing.Point(216, 3);
             this.originalPicBox.Name = "originalPicBox";
-            this.originalPicBox.Size = new System.Drawing.Size(549, 494);
+            this.originalPicBox.Size = new System.Drawing.Size(549, 519);
             this.originalPicBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.originalPicBox.TabIndex = 0;
             this.originalPicBox.TabStop = false;
@@ -284,7 +289,7 @@ namespace AnsysPlotRecognition
             this.filesListBox.ItemHeight = 18;
             this.filesListBox.Location = new System.Drawing.Point(3, 3);
             this.filesListBox.Name = "filesListBox";
-            this.filesListBox.Size = new System.Drawing.Size(207, 494);
+            this.filesListBox.Size = new System.Drawing.Size(207, 519);
             this.filesListBox.TabIndex = 6;
             // 
             // openFileDialog
@@ -357,16 +362,12 @@ namespace AnsysPlotRecognition
             this.ClientSize = new System.Drawing.Size(1168, 572);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.toolStrip);
-            this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.statusStrip);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "Ansys Plot Recognition";
-            this.menuStrip.ResumeLayout(false);
-            this.menuStrip.PerformLayout();
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -385,10 +386,6 @@ namespace AnsysPlotRecognition
         }
 
         #endregion
-
-        private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.ToolStripMenuItem FileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem OpenFileToolStripMenuItem1;
         private System.Windows.Forms.ToolStrip toolStrip;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.PictureBox originalPicBox;
@@ -414,6 +411,9 @@ namespace AnsysPlotRecognition
         private System.Windows.Forms.Button exportToExcelBtn;
         private System.Windows.Forms.Button recognizeBtn;
         private System.Windows.Forms.Button renameBtn;
+        private System.Windows.Forms.ToolStripButton openFilesBtn;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

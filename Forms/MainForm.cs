@@ -1,4 +1,5 @@
 ﻿using AnsysPlotRecognition.Models;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,8 +12,11 @@ namespace AnsysPlotRecognition
     public partial class MainForm : Form
     {
         Recognizer recognizer = new Recognizer(@".\lang\");
+
         BindingList<PlotResult> plotResults = new BindingList<PlotResult>();
-        
+
+        private static readonly NLog.Logger _log = LogManager.GetCurrentClassLogger();
+
         RectangleF region = RectangleF.Empty;
         RectangleF imgArea = RectangleF.Empty;
         Rectangle crop = Rectangle.Empty;
@@ -38,26 +42,12 @@ namespace AnsysPlotRecognition
             originalPicBox.DataBindings.Add(new Binding("Image", plotResults, "OriginalImg",true, DataSourceUpdateMode.OnPropertyChanged));
             fragmentPicBox.DataBindings.Add(new Binding("Image", plotResults, "CropImg", true, DataSourceUpdateMode.OnPropertyChanged));
             recognRichTBox.DataBindings.Add(new Binding("Text", plotResults, "RecognizedText", true, DataSourceUpdateMode.OnPropertyChanged));
+
             //exportToExcelBtn.DataBindings.Add(new Binding("Enabled", recognRichTBox, ""))
+            _log.Info("Open MainForm");
         }
 
-        private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            toolStripProgressBar.Value = 0;
 
-            plotResults.Clear();
-            DialogResult result = openFileDialog.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    PlotResult plot = new PlotResult(file);
-                    plotResults.Add(plot);
-                }
-                toolStripLogLabel.Text = $"Загружено файлов: {plotResults.Count}";
-                pictureLoaded = true;
-            }
-        }
         private void selectRegionBtn_Click(object sender, EventArgs e)
         {
             toolStripProgressBar.Value = 0;
@@ -69,6 +59,7 @@ namespace AnsysPlotRecognition
             checkBoxForAll.Enabled = false;
         }
 
+        #region Drawing
         /// <summary>
         /// Метод определения коэффициента масштабирования изображения при отображении в PictureBox с опцией SizeMode: Zoom
         /// </summary>
@@ -223,6 +214,7 @@ namespace AnsysPlotRecognition
                 toolStripStatusY.Text = e.Y.ToString();
             }
         }
+        #endregion
 
         private void Recognize(bool all = true)
         {
@@ -252,8 +244,10 @@ namespace AnsysPlotRecognition
                 }
                 recognRichTBox.Text = recognizedText;
             }
+            recognRichTBox.Enabled = true;
             checkBoxForAll.Enabled = false;
             exportToExcelBtn.Enabled = true;
+            toolStripProgressBar.Value = 0;
         }
         private void Export(bool all = true)
         {
@@ -303,6 +297,42 @@ namespace AnsysPlotRecognition
             }
         }
 
+        private void renameBtn_Click(object sender, EventArgs e)
+        {
+            //TODO Заполнить заглушку renameBtn_Click
+        }
+
+        private void openFilesBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                toolStripProgressBar.Value = 0;
+
+                plotResults.Clear();
+                DialogResult result = openFileDialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    foreach (var file in openFileDialog.FileNames)
+                    {
+                        PlotResult plot = new PlotResult(file);
+                        plotResults.Add(plot);
+                    }
+                    toolStripLogLabel.Text = $"Загружено файлов: {plotResults.Count}";
+                    pictureLoaded = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex);
+            }
+            
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            //TODO Заполнить заглушку формы лога
+        }
+
         private void recognizeBtn_Click(object sender, EventArgs e)
         {
             try
@@ -331,6 +361,7 @@ namespace AnsysPlotRecognition
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Обнаружена ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _log.Error(ex);
             }
         }
 

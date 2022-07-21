@@ -39,9 +39,10 @@ namespace AnsysPlotRecognition
                     Convert.ToDouble(ExtractValue(smx))
                     );
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Program.Logger.Error(ex);
+                return null;
             }
         }
         private string ExtractValue(string inputString)
@@ -99,8 +100,9 @@ namespace AnsysPlotRecognition
                 }
                 return package.GetAsByteArray();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Program.Logger.Error(ex);
                 throw;
             }
         }
@@ -112,8 +114,9 @@ namespace AnsysPlotRecognition
                 File.WriteAllBytes($"{DirectoryPath}\\{fileName}", GetReport(solutions));
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Program.Logger.Error(ex);
                 return false;
             }
         }
