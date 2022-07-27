@@ -8,7 +8,7 @@ namespace AnsysPlotRecognition
 {
     public class Recognizer
     {
-        public Tesseract Tesseract { get; private set; }
+        private Tesseract _tesseract;
 
         /// <summary>
         /// Конструктор по-умолчанию
@@ -16,7 +16,7 @@ namespace AnsysPlotRecognition
         /// <param name="dataModelPath">Путь до файла с языковыми моделями</param>
         public Recognizer(string dataModelPath)
         {
-            Tesseract = new Tesseract(dataModelPath, "eng", OcrEngineMode.TesseractLstmCombined);
+            _tesseract = new Tesseract(dataModelPath, "eng", OcrEngineMode.TesseractLstmCombined);
         }
         /// <summary>
         /// Распознает текст на картинке
@@ -28,9 +28,9 @@ namespace AnsysPlotRecognition
             try
             {
                 Image<Bgr, byte> crop = new Image<Bgr, byte>(img);
-                Tesseract.SetImage(crop);
-                Tesseract.Recognize();
-                return (Tesseract.GetUTF8Text(), true);
+                _tesseract.SetImage(crop);
+                _tesseract.Recognize();
+                return (_tesseract.GetUTF8Text(), true);
             }
             catch (Exception ex)
             {
@@ -43,20 +43,20 @@ namespace AnsysPlotRecognition
         /// <param name="img">Картинка, на которой расположен текст для распознавания</param>
         /// <param name="rect">Область, в которой необходимо производить распознавание</param>
         /// <returns>Кортеж, состоящий из распознанного текста и булевого значения об успешности операции</returns>
-        public (string, bool) RecognizeIt(Bitmap img, Rectangle rect)
+        public string RecognizeIt(Bitmap img, Rectangle rect)
         {
             try
             {
                 Image<Bgr, byte> pic = new Image<Bgr, byte>(img);
                 pic.ROI = rect;
-                Tesseract.SetImage(pic);
+                _tesseract.SetImage(pic);
                 
-                Tesseract.Recognize();
-                return (Tesseract.GetUTF8Text(), true);
+                _tesseract.Recognize();
+                return _tesseract.GetUTF8Text();
             }
             catch (Exception ex)
             {
-                return (ex.Message, false);
+                return ex.Message;
             }
         }
     }

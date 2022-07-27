@@ -36,6 +36,8 @@ namespace AnsysPlotRecognition
             this.selectRegionBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -78,7 +80,9 @@ namespace AnsysPlotRecognition
             this.toolStripSeparator3,
             this.selectRegionBtn,
             this.toolStripSeparator1,
-            this.toolStripButton1});
+            this.toolStripButton1,
+            this.toolStripSeparator2,
+            this.toolStripButton2});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
@@ -127,6 +131,20 @@ namespace AnsysPlotRecognition
             this.toolStripButton1.Size = new System.Drawing.Size(31, 22);
             this.toolStripButton1.Text = "Лог";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton2.Text = "toolStripButton2";
             // 
             // tableLayoutPanel1
             // 
@@ -264,6 +282,7 @@ namespace AnsysPlotRecognition
             this.checkBoxForAll.TabIndex = 10;
             this.checkBoxForAll.Text = "Выделить для всех";
             this.checkBoxForAll.UseVisualStyleBackColor = true;
+            this.checkBoxForAll.CheckedChanged += new System.EventHandler(this.checkBoxForAll_CheckedChanged);
             // 
             // originalPicBox
             // 
@@ -289,8 +308,10 @@ namespace AnsysPlotRecognition
             this.filesListBox.ItemHeight = 18;
             this.filesListBox.Location = new System.Drawing.Point(3, 3);
             this.filesListBox.Name = "filesListBox";
+            this.filesListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.filesListBox.Size = new System.Drawing.Size(207, 519);
             this.filesListBox.TabIndex = 6;
+            this.filesListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.filesListBox_MouseDoubleClick);
             // 
             // openFileDialog
             // 
@@ -414,6 +435,8 @@ namespace AnsysPlotRecognition
         private System.Windows.Forms.ToolStripButton openFilesBtn;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
     }
 }
 

@@ -13,6 +13,7 @@ namespace AnsysPlotRecognition.Models
         private Image _originalImg;
         private Image _cropImg;
         private string _recognizedText;
+        private bool _parsingError;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -87,6 +88,22 @@ namespace AnsysPlotRecognition.Models
                 }
             }
         }
+        public bool ParsingError
+        {
+            get 
+            {
+                return _parsingError; 
+            }
+            set
+            {
+                if (value != _parsingError)
+                {
+                    _parsingError = value;
+                    NotifyPropertyChanged();
+                } 
+            }
+        }
+        public SolutionInformation SolutionInformation { get; set; }
 
         private void NotifyPropertyChanged(string propertyName = "")
         {
@@ -115,6 +132,30 @@ namespace AnsysPlotRecognition.Models
         public override string ToString()
         {
             return FileName;
+        }
+    }
+
+    //Используется для Transient Analys
+    public class SolutionInformation
+    {
+        public string Solution { get; set; }
+        public string PlotType { get; set; }
+        public int Step { get; set; }
+        public int SubStep { get; set; }
+        public double Time { get; set; }
+        public string RSYS { get; set; }
+        public string DMX { get; set; }
+        public double SMN { get; set; }
+        public double SMX { get; set; }
+        public SolutionInformation(string solution, string plotType, int step, int subStep, double time, double sMin, double sMax)
+        {
+            Solution = solution;
+            PlotType = plotType;
+            Step = step;
+            SubStep = subStep;
+            Time = time;
+            SMN = sMin;
+            SMX = sMax;
         }
     }
 }
